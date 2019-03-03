@@ -18,7 +18,7 @@ time_interval=60.0
 
 def pull_data():
     currentDT = datetime.now()
-    fileName=str(currentDT.year)+'-'+str(currentDT.month)+'-'+str(currentDT.day)+'T_{0}.csv'
+    fileName=str(currentDT.year)+'-'+str(currentDT.month).zfill(2)+'-'+str(currentDT.day).zfill(2)+'T_{0}.csv'
     for key in endpoints:
         if(os.path.exists(fileName.format(key))):
             print(key,'File already exists, skipping creation')
@@ -54,7 +54,7 @@ def pull_data():
     # Check every minute for updated readings
     starttime=time.time()
     while True:
-        time.sleep(60.0 - ((time.time() - starttime) % 60.0))
+        time.sleep(time_interval - ((time.time() - starttime) % time_interval))
         print()
         for key in endpoints:
             try:
